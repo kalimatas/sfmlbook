@@ -1,23 +1,55 @@
 #include "include/Game.hpp"
+#include "include/StringHelpers.hpp"
+#include <iostream>
+
+const float Game::PlayerSpeed = 90.f;
+// 60 frames per second
+const sf::Time Game::TimePerFrame = sf::seconds(1.f / 60.0f);
 
 Game::Game()
 	: mWindow(sf::VideoMode(640, 480), "SFML Book application"),
+	 mTexture(),
 	 mPlayer(),
+	 mFont(),
+	 mStatisticsText(),
+	 mStatisticsUpdateTime(),
+	 mStatisticsNumFrames(0),
 	 mIsMovingLeft(false),
 	 mIsMovingDown(false),
 	 mIsMovingRight(false),
 	 mIsMovingUp(false)
 {
-	mPlayer.setRadius(40.f);
+	mWindow.setVerticalSyncEnabled(true);
+
+	// Load player image
+	if (!mTexture.loadFromFile("src/Media/Textures/Eagle.png")) {
+			// ???
+	}
+	mPlayer.setTexture(mTexture);
 	mPlayer.setPosition(150.f, 150.f);
-	mPlayer.setFillColor(sf::Color::Cyan);
+
+	// Statistics text
+	mFont.loadFromFile("src/Media/Sansation.ttf");
+	mStatisticsText.setFont(mFont);
+	mStatisticsText.setPosition(5.f ,5.f);
+	mStatisticsText.setCharacterSize(10);
 }
 
 void Game::run()
 {
+	sf::Clock clock;
+	sf::Time timeSinceLastUpdate = sf::Time::Zero;
+
 	while (mWindow.isOpen()) {
-		processEvents();
-		update();
+		sf::Time elapsedTime = clock.restart();
+		timeSinceLastUpdate += elapsedTime;
+		while (timeSinceLastUpdate > TimePerFrame) {
+			timeSinceLastUpdate -= TimePerFrame;
+			processEvents();
+			update(TimePerFrame);
+		}
+
+		updateStatistics(elapsedTime);
 		render();
 	}
 }
@@ -40,25 +72,41 @@ void Game::processEvents()
 	}
 }
 
-void Game::update() {
+void Game::update(sf::Time deltaTime) {
 	sf::Vector2f movement(0.f, 0.f);
 
 	if (mIsMovingUp)
-		movement.y -= 1.f;
+		movement.y -= PlayerSpeed;
 	if (mIsMovingDown)
-		movement.y += 1.f;
+		movement.y += PlayerSpeed;
 	if (mIsMovingLeft)
-		movement.x -= 1.f;
+		movement.x -= PlayerSpeed;
 	if (mIsMovingRight)
-		movement.x += 1.f;
+		movement.x += PlayerSpeed;
 
-	mPlayer.move(movement);
+	mPlayer.move(movement * deltaTime.asSeconds());
 }
 
 void Game::render() {
 	mWindow.clear();
 	mWindow.draw(mPlayer);
+	mWindow.draw(mStatisticsText);
 	mWindow.display();
+}
+
+void Game::updateStatistics(sf::Time elapsedTime) {
+	mStatisticsUpdateTime += elapsedTime;
+	mStatisticsNumFrames++;
+
+	if (mStatisticsUpdateTime >= sf::seconds(1.f)) {
+		mStatisticsText.setString(
+			"Frames / Second = " + toString(mStatisticsNumFrames) + "\n" +
+			"Time / Update = " + toString(mStatisticsUpdateTime.asMicroseconds() / mStatisticsNumFrames) + "us"
+		);
+
+		mStatisticsUpdateTime -= sf::seconds(1.f);
+		mStatisticsNumFrames = 0;
+	}
 }
 
 void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
