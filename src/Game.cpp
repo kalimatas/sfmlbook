@@ -1,5 +1,7 @@
 #include "include/Game.hpp"
 #include "include/StringHelpers.hpp"
+#include "include/ResourceHolder.hpp"
+#include "include/Texture.hpp"
 #include <iostream>
 
 const float Game::PlayerSpeed = 90.f;
@@ -8,7 +10,6 @@ const sf::Time Game::TimePerFrame = sf::seconds(1.f / 60.0f);
 
 Game::Game()
 	: mWindow(sf::VideoMode(640, 480), "SFML Book application"),
-	 mTexture(),
 	 mPlayer(),
 	 mFont(),
 	 mStatisticsText(),
@@ -22,10 +23,10 @@ Game::Game()
 	mWindow.setVerticalSyncEnabled(true);
 
 	// Load player image
-	if (!mTexture.loadFromFile("src/Media/Textures/Eagle.png")) {
-			// ???
-	}
-	mPlayer.setTexture(mTexture);
+	Resources::ResourceHolder<sf::Texture, Textures::ID> textures;
+	textures.load(Textures::Airplane, "src/Media/Textures/Eagle.png");
+
+	mPlayer.setTexture(textures.get(Textures::Airplane));
 	mPlayer.setPosition(150.f, 150.f);
 
 	// Statistics text

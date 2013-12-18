@@ -20,7 +20,6 @@ private:
 	static const sf::Time TimePerFrame;
 
 	sf::RenderWindow mWindow;
-	sf::Texture mTexture;
 	sf::Sprite mPlayer;
 	sf::Font mFont;
 	sf::Text mStatisticsText;
