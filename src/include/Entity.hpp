@@ -2,8 +2,9 @@
 #define ENTITY_HPP_
 
 #include <SFML/Graphics.hpp>
+#include "SceneNode.hpp"
 
-class Entity
+class Entity : public SceneNode
 {
 public:
 	void setVelocity(sf::Vector2f);
