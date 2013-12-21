@@ -22,11 +22,6 @@ Game::Game()
 {
 	mWindow.setVerticalSyncEnabled(true);
 
-	// Load player image
-	Resources::ResourceHolder<sf::Texture, Textures::ID> textures;
-	textures.load(Textures::Airplane, "src/Media/Textures/Eagle.png");
-
-	mPlayer.setTexture(textures.get(Textures::Airplane));
 	mPlayer.setPosition(150.f, 150.f);
 
 	// Statistics text
@@ -38,6 +33,11 @@ Game::Game()
 
 void Game::run()
 {
+	// Load player image
+	Resources::ResourceHolder<sf::Texture, Textures::ID> textures;
+	textures.load(Textures::Airplane, "src/Media/Textures/Eagle.png");
+	mPlayer.setTexture(textures.get(Textures::Airplane));
+
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
