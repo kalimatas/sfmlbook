@@ -4,8 +4,8 @@
 #include <cassert>
 
 SceneNode::SceneNode()
-	: mChildren(),
-	mParent(nullptr)
+	: mParent(nullptr),
+	mChildren()
 {}
 
 void SceneNode::attachChild(Ptr child) {

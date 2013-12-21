@@ -1,6 +1,8 @@
 #ifndef ENTITY_HPP_
 #define ENTITY_HPP_
 
+#include <SFML/Graphics.hpp>
+
 class Entity
 {
 public:
