@@ -3,6 +3,7 @@
 
 #include "Entity.hpp"
 #include <SFML/Graphics.hpp>
+#include "ResourceIdentifies.hpp"
 
 class Aircraft : public Entity
 {
@@ -12,7 +13,7 @@ public:
 		Raptor
 	};
 
-	explicit Aircraft(Type type);
+	explicit Aircraft(Type, const TextureHolder&);
 	virtual void drawCurrent(sf::RenderTarget&, sf::RenderStates) const;
 
 private:

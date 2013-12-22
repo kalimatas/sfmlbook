@@ -1,7 +1,7 @@
 #include "include/Game.hpp"
 #include "include/StringHelpers.hpp"
 #include "include/ResourceHolder.hpp"
-#include "include/Texture.hpp"
+#include "include/ResourceIdentifies.hpp"
 #include <iostream>
 
 const float Game::PlayerSpeed = 90.f;
@@ -34,9 +34,9 @@ Game::Game()
 void Game::run()
 {
 	// Load player image
-	Resources::ResourceHolder<sf::Texture, Textures::ID> textures;
-	textures.load(Textures::Airplane, "src/Media/Textures/Eagle.png");
-	mPlayer.setTexture(textures.get(Textures::Airplane));
+	ResourceHolder<sf::Texture, Textures::ID> textures;
+	textures.load(Textures::Eagle, "src/Media/Textures/Eagle.png");
+	mPlayer.setTexture(textures.get(Textures::Eagle));
 
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;

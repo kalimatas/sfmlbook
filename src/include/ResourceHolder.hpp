@@ -7,8 +7,6 @@
 #include <iostream>
 #include "StringHelpers.hpp"
 
-namespace Resources {
-
 template <typename Resource, typename Identifier>
 class ResourceHolder {
 public:
@@ -31,12 +29,10 @@ private:
 	std::map<Identifier, std::unique_ptr<Resource> > mResourceMap;
 };
 
-}
-
 // Implementation
 
 template<typename Resource, typename Identifier>
-void Resources::ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string& fileName) {
+void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string& fileName) {
 	std::unique_ptr<Resource> resource(new Resource());
 
 	if (!resource->loadFromFile(fileName)) {
@@ -48,7 +44,7 @@ void Resources::ResourceHolder<Resource, Identifier>::load(Identifier id, const 
 
 template<typename Resource, typename Identifier>
 template<typename Parameter>
-void Resources::ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string& fileName, const Parameter& secondParameter) {
+void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string& fileName, const Parameter& secondParameter) {
 	std::unique_ptr<Resource> resource(new Resource());
 
 	if (!resource->loadFromFile(fileName, secondParameter)) {
@@ -59,13 +55,13 @@ void Resources::ResourceHolder<Resource, Identifier>::load(Identifier id, const 
 }
 
 template<typename Resource, typename Identifier>
-void Resources::ResourceHolder<Resource, Identifier>::insertResource(Identifier id, std::unique_ptr<Resource> resource) {
+void ResourceHolder<Resource, Identifier>::insertResource(Identifier id, std::unique_ptr<Resource> resource) {
 	auto inserted = mResourceMap.insert(std::make_pair(id, std::move(resource)));
 	assert(inserted.second);
 }
 
 template<typename Resource, typename Identifier>
-Resource& Resources::ResourceHolder<Resource, Identifier>::get(Identifier id) {
+Resource& ResourceHolder<Resource, Identifier>::get(Identifier id) {
 	auto found = mResourceMap.find(id);
 	assert(found != mResourceMap.end());
 
@@ -73,7 +69,7 @@ Resource& Resources::ResourceHolder<Resource, Identifier>::get(Identifier id) {
 }
 
 template<typename Resource, typename Identifier>
-const Resource& Resources::ResourceHolder<Resource, Identifier>::get(Identifier id) const {
+const Resource& ResourceHolder<Resource, Identifier>::get(Identifier id) const {
 	auto found = mResourceMap.find(id);
 	assert(found != mResourceMap.end());
 
