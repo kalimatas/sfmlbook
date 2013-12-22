@@ -12,3 +12,7 @@ void Entity::setVelocity(float vx, float vy) {
 	mVelocity.x = vx;
 	mVelocity.y = vy;
 }
+
+void Entity::updateCurrent(sf::Time dt) {
+	move(mVelocity * dt.asSeconds());
+}

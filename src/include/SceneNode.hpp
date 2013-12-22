@@ -5,6 +5,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/System/NonCopyable.hpp>
+#include <SFML/System/Time.hpp>
 
 class SceneNode
 	: public sf::Transformable,
@@ -20,10 +21,15 @@ public:
 	void attachChild(Ptr);
 	Ptr detachChild(const SceneNode&);
 
+	void update(sf::Time);
+
 private:
 	virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
 	virtual void drawCurrent(sf::RenderTarget&, sf::RenderStates) const;
 	void drawChildren(sf::RenderTarget&, sf::RenderStates) const;
+
+	virtual void updateCurrent(sf::Time);
+	void updateChildren(sf::Time);
 
 private:
 	SceneNode* mParent;
