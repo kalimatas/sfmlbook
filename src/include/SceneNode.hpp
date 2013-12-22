@@ -23,6 +23,9 @@ public:
 
 	void update(sf::Time);
 
+	sf::Transform getWorldTransform() const;
+	sf::Vector2f getWorldPosition() const;
+
 private:
 	virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
 	virtual void drawCurrent(sf::RenderTarget&, sf::RenderStates) const;
