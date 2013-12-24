@@ -2,8 +2,10 @@
 #define GAME_HPP_
 
 #include <SFML/Graphics.hpp>
+#include "World.hpp"
 
-class Game{
+class Game
+{
 public:
 	Game();
 	void run();
@@ -16,21 +18,16 @@ private:
 	void updateStatistics(sf::Time);
 
 private:
-	static const float PlayerSpeed;
 	static const sf::Time TimePerFrame;
 
 	sf::RenderWindow mWindow;
-	sf::Sprite mPlayer;
+	World mWorld;
+
 	sf::Font mFont;
 	sf::Text mStatisticsText;
 	sf::Time mStatisticsUpdateTime;
 
 	std::size_t mStatisticsNumFrames;
-
-	bool mIsMovingLeft;
-	bool mIsMovingDown;
-	bool mIsMovingRight;
-	bool mIsMovingUp;
 };
 
 #endif /* GAME_HPP_ */

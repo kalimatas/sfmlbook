@@ -4,25 +4,18 @@
 #include "include/ResourceIdentifies.hpp"
 #include <iostream>
 
-const float Game::PlayerSpeed = 90.f;
 // 60 frames per second
 const sf::Time Game::TimePerFrame = sf::seconds(1.f / 60.0f);
 
 Game::Game()
 	: mWindow(sf::VideoMode(640, 480), "SFML Book application"),
-	 mPlayer(),
 	 mFont(),
 	 mStatisticsText(),
 	 mStatisticsUpdateTime(),
 	 mStatisticsNumFrames(0),
-	 mIsMovingLeft(false),
-	 mIsMovingDown(false),
-	 mIsMovingRight(false),
-	 mIsMovingUp(false)
+	 mWorld(mWindow)
 {
 	mWindow.setVerticalSyncEnabled(true);
-
-	mPlayer.setPosition(150.f, 150.f);
 
 	// Statistics text
 	mFont.loadFromFile("src/Media/Sansation.ttf");
@@ -33,11 +26,6 @@ Game::Game()
 
 void Game::run()
 {
-	// Load player image
-	ResourceHolder<sf::Texture, Textures::ID> textures;
-	textures.load(Textures::Eagle, "src/Media/Textures/Eagle.png");
-	mPlayer.setTexture(textures.get(Textures::Eagle));
-
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
@@ -74,23 +62,14 @@ void Game::processEvents()
 }
 
 void Game::update(sf::Time deltaTime) {
-	sf::Vector2f movement(0.f, 0.f);
-
-	if (mIsMovingUp)
-		movement.y -= PlayerSpeed;
-	if (mIsMovingDown)
-		movement.y += PlayerSpeed;
-	if (mIsMovingLeft)
-		movement.x -= PlayerSpeed;
-	if (mIsMovingRight)
-		movement.x += PlayerSpeed;
-
-	mPlayer.move(movement * deltaTime.asSeconds());
+	mWorld.update(deltaTime);
 }
 
 void Game::render() {
 	mWindow.clear();
-	mWindow.draw(mPlayer);
+	mWorld.draw();
+
+	mWindow.setView(mWindow.getDefaultView());
 	mWindow.draw(mStatisticsText);
 	mWindow.display();
 }
@@ -111,12 +90,5 @@ void Game::updateStatistics(sf::Time elapsedTime) {
 }
 
 void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
-	if (key == sf::Keyboard::W)
-		mIsMovingUp = isPressed;
-	else if (key == sf::Keyboard::S)
-		mIsMovingDown = isPressed;
-	else if (key == sf::Keyboard::A)
-		mIsMovingLeft = isPressed;
-	else if (key == sf::Keyboard::D)
-		mIsMovingRight = isPressed;
+
 }
