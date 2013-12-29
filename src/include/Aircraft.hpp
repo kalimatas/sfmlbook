@@ -13,7 +13,7 @@ public:
 		Raptor
 	};
 
-	explicit Aircraft(Type, const TextureHolder&);
+	Aircraft(Type, const TextureHolder&);
 	virtual void drawCurrent(sf::RenderTarget&, sf::RenderStates) const;
 
 private:

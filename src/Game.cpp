@@ -8,14 +8,14 @@
 const sf::Time Game::TimePerFrame = sf::seconds(1.f / 60.0f);
 
 Game::Game()
-	: mWindow(sf::VideoMode(640, 480), "SFML Book application"),
+	: mWindow(sf::VideoMode(640, 480), "SFML Book application", sf::Style::Close),
 	 mFont(),
 	 mStatisticsText(),
 	 mStatisticsUpdateTime(),
 	 mStatisticsNumFrames(0),
 	 mWorld(mWindow)
 {
-	mWindow.setVerticalSyncEnabled(true);
+	//mWindow.setVerticalSyncEnabled(true);
 
 	// Statistics text
 	mFont.loadFromFile("src/Media/Sansation.ttf");

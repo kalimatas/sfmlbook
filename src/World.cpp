@@ -4,6 +4,8 @@
 #include "include/ResourceIdentifies.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
+#include <iostream>
+#include "include/Aircraft.hpp"
 
 World::World(sf::RenderWindow& window)
 	: mWindow(window),
@@ -13,8 +15,8 @@ World::World(sf::RenderWindow& window)
 	  mSceneLayers(),
 	  mWorldBounds(0.f, 0.f, mWorldView.getSize().x, 2000.f),
 	  mSpawnPosition(mWorldView.getSize().x / 2.f, mWorldBounds.height - mWorldView.getSize().y / 2.f),
-	  mPlayerAircraft(nullptr),
-	  mScrollSpeed(-50.f)
+	  mScrollSpeed(-80.f),
+	  mPlayerAircraft(nullptr)
 {
 	loadTextures();
 	buildScene();

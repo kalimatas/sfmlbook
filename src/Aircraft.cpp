@@ -1,6 +1,7 @@
 #include "include/Aircraft.hpp"
 #include "include/ResourceHolder.hpp"
 #include "include/ResourceIdentifies.hpp"
+#include <iostream>
 
 Textures::ID toTextureID(Aircraft::Type type) {
 	switch (type) {
@@ -20,5 +21,5 @@ Aircraft::Aircraft(Type type, const TextureHolder& textures)
 }
 
 void Aircraft::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const {
-	target.draw(mSprite);
+	target.draw(mSprite, states);
 }

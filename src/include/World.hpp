@@ -10,6 +10,11 @@
 
 #include <array>
 
+namespace sf
+{
+	class RenderWindow;
+}
+
 class World: private sf::NonCopyable
 {
 public:

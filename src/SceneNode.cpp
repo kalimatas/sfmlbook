@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <iostream>
 
 SceneNode::SceneNode()
 	: mParent(nullptr),
@@ -60,7 +61,7 @@ void SceneNode::updateChildren(sf::Time dt) {
 sf::Transform SceneNode::getWorldTransform() const {
 	sf::Transform transform = sf::Transform::Identity;
 	for (const SceneNode* node = this; node != nullptr; node = node->mParent) {
-		transform = transform * node->getTransform();
+		transform = node->getTransform() * transform;
 	}
 
 	return transform;
